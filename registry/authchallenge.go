@@ -1,8 +1,9 @@
 package registry
 
 import (
-	"net/http"
 	"strings"
+
+	"github.com/heroku/docker-registry-client/registry/http"
 )
 
 // Octet types from RFC 2616.

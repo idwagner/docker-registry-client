@@ -1,8 +1,10 @@
 package registry
 
 import (
+	"fmt"
 	"io"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
 
 	"github.com/docker/distribution"
@@ -13,7 +15,18 @@ func (registry *Registry) DownloadBlob(repository string, digest digest.Digest) 
 	url := registry.url("/v2/%s/blobs/%s", repository, digest)
 	registry.Logf("registry.blob.download url=%s repository=%s digest=%s", url, repository, digest)
 
-	resp, err := registry.Client.Get(url)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := registry.Client.Do(req)
+	debug, err := httputil.DumpRequest(req, true)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Printf("%s", string(debug))
+
 	if err != nil {
 		return nil, err
 	}

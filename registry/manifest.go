@@ -3,7 +3,8 @@ package registry
 import (
 	"bytes"
 	"io/ioutil"
-	"net/http"
+
+	"github.com/heroku/docker-registry-client/registry/http"
 
 	"github.com/docker/distribution"
 	"github.com/docker/distribution/manifest/schema1"
@@ -57,6 +58,7 @@ func (registry *Registry) ManifestV2(repository, reference string) (*schema2.Des
 	}
 
 	defer resp.Body.Close()
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err

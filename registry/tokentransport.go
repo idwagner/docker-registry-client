@@ -3,8 +3,9 @@ package registry
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
 	"net/url"
+
+	"github.com/heroku/docker-registry-client/registry/http"
 )
 
 type TokenTransport struct {
